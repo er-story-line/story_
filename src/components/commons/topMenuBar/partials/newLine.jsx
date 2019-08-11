@@ -1,0 +1,184 @@
+import React from 'react'
+import {
+  MenuItem, Icon, Button, Input,
+} from 'semantic-ui-react'
+import RepoFactory from 'src/repos/RepoFactory'
+import styled, { keyframes } from 'styled-components'
+
+const MenuItemFlush = styled(MenuItem)`
+  &::before {
+    width: 0 !important;
+  }
+`
+const MenuItemFlushLeft = styled(MenuItem)`
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+`
+
+const FadeOut = () => keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`
+
+const FadeIn = () => keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
+
+const ExpandAnimation = () => keyframes`
+  from {
+    width: 0px;
+  }
+  to {
+    width: 250px;
+  }
+`
+
+const CenteredIcon = styled(Icon)`
+  margin: 0 !important;
+`
+
+const IconRelWrapper = styled.div`
+  width: 21.234px;
+  height: 18px;
+`
+const FadeOutIcon = styled.div`
+  opacity: 1;
+  position: absolute;
+  animation: ${FadeOut()} 0.3s linear 0s 1 normal forwards;
+`
+const FadeInIcon = styled.div`
+  opacity: 0;
+  position: absolute;
+  animation: ${FadeIn()} 0.3s linear 0s 1 normal forwards;
+`
+
+const SlideOut = styled.div`
+  width: 0px;
+  animation: ${ExpandAnimation()} 0.3s ease 0s 1 normal forwards;
+`
+
+export default class NewLine extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.lineRepo = RepoFactory.getLineRepo()
+    this.handleOnCreateLine = this.handleOnCreateLine.bind(this)
+    this.handleTitleChange = this.handleTitleChange.bind(this)
+    this.expandTitleInput = this.expandTitleInput.bind(this)
+    this.toggleCreate = this.toggleCreate.bind(this)
+
+    this.state = {
+      expand: false,
+      collapse: false,
+      title: '',
+    }
+  }
+
+  async handleOnCreateLine() {
+    const { title } = this.state
+    try {
+      const data = await this.lineRepo.add(title)
+      console.log(data)
+      this.setState(({
+        title: '',
+        expand: false,
+        collapse: true,
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleTitleChange(event) {
+    this.setState({ title: event.target.value })
+  }
+
+  expandTitleInput() {
+    this.setState({
+      expand: true,
+    })
+  }
+
+  toggleCreate() {
+    this.setState(({ expand, collapse }) => ({
+      expand: !expand,
+      collapse: !collapse,
+    }))
+  }
+
+  render() {
+    const { expand, collapse, title } = this.state
+    let dom = null
+    if (expand === true) {
+      dom = (
+        <>
+          <MenuItemFlush onClick={this.toggleCreate}>
+            <IconRelWrapper>
+              <FadeOutIcon>
+                <CenteredIcon name="add" />
+              </FadeOutIcon>
+              <FadeInIcon>
+                <CenteredIcon name="minus" />
+              </FadeInIcon>
+            </IconRelWrapper>
+          </MenuItemFlush>
+          <MenuItemFlushLeft>
+            <SlideOut>
+              <Input
+                onChange={this.handleTitleChange}
+                value={title}
+                size="mini"
+                fluid
+                label={
+                  <Button
+                    primary
+                    disabled={!title}
+                    size="mini"
+                    onClick={this.handleOnCreateLine}
+                  >
+                    <CenteredIcon name="check" />
+                  </Button>
+                }
+                placeholder="Line Title..."
+                style={{ maxHeight: '35px' }}
+                labelPosition="right"
+              />
+            </SlideOut>
+          </MenuItemFlushLeft>
+        </>
+      )
+    } else if (collapse === true) {
+      dom = (
+        <>
+          <MenuItem onClick={this.toggleCreate}>
+            <IconRelWrapper>
+              <FadeOutIcon>
+                <CenteredIcon name="minus" />
+              </FadeOutIcon>
+              <FadeInIcon>
+                <CenteredIcon name="add" />
+              </FadeInIcon>
+            </IconRelWrapper>
+          </MenuItem>
+        </>
+      )
+    } else {
+      dom = (
+        <MenuItem onClick={this.expandTitleInput}>
+          <CenteredIcon name="add" />
+        </MenuItem>
+      )
+    }
+
+    return dom
+  }
+}

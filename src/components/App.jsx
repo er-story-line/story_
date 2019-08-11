@@ -1,12 +1,12 @@
 import React from 'react'
 import { Container, MenuItem } from 'semantic-ui-react'
 import RepoFactory from 'src/repos/RepoFactory'
-import TopMenuBar from './commons/TopMenuBar'
-import EditableLine from './line/EditableLine'
 import Importer from 'src/lib/Importer'
 import accounts from 'src/testdata/accounts'
 import lines from 'src/testdata/lines'
 import posts from 'src/testdata/posts'
+import EditableLine from './line/EditableLine'
+import TopMenuBar from './commons/topMenuBar/TopMenuBar'
 import LineWrapper from './line/LineWrapper'
 
 class App extends React.Component {
@@ -70,7 +70,7 @@ class App extends React.Component {
 
     return (
       <LineWrapper {...lineMeta}>
-        <TopMenuBar>
+        <TopMenuBar lineRepo={this.lineRepo}>
           <MenuItem header>Story_ (aka Storyline)</MenuItem>
         </TopMenuBar>
         <Container text style={{ margin: '2em' }}>

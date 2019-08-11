@@ -1,5 +1,7 @@
 import UUID from 'uuid'
 import Emitter from 'emittery'
+import store from 'src/store'
+import { actionCreators } from 'src/reducers/line'
 
 class LineRepo {
   constructor(postRepo) {
@@ -52,6 +54,11 @@ class LineRepo {
     const line = this.createNewLine(title, idxResource)
     this.indices[idxResource] = idx
     this.lines[mdResource] = line
+    store.dispatch(
+      actionCreators.createNewLine({
+        idxResource, mdResource, idx, line,
+      }),
+    )
     return new Promise(res => res(line, idx))
   }
 
@@ -99,7 +106,10 @@ class LineRepo {
     console.log(indexItems)
     indexItems.push(item)
     this.events.emit('post.add', {
-      item, indexItems, post, resource,
+      item,
+      indexItems,
+      post,
+      resource,
     })
     return new Promise(res => res(indexItems, post))
   }

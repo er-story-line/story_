@@ -1,4 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { UPDATE_CURRENT_LINE } from 'src/reducers/account'
 import {
   MenuItem, Icon, Button, Input,
 } from 'semantic-ui-react'
@@ -66,7 +69,7 @@ const SlideOut = styled.div`
   animation: ${ExpandAnimation()} 0.3s ease 0s 1 normal forwards;
 `
 
-export default class NewLine extends React.Component {
+class NewLine extends React.Component {
   constructor(props) {
     super(props)
 
@@ -85,14 +88,15 @@ export default class NewLine extends React.Component {
 
   async handleOnCreateLine() {
     const { title } = this.state
+    const { updateCurrentLine } = this.props
     try {
-      const data = await this.lineRepo.add(title)
-      console.log(data)
+      const { mdResource } = await this.lineRepo.add(title)
       this.setState(({
         title: '',
         expand: false,
         collapse: true,
       }))
+      updateCurrentLine(mdResource)
     } catch (error) {
       console.error(error)
     }
@@ -182,3 +186,29 @@ export default class NewLine extends React.Component {
     return dom
   }
 }
+
+/**
+ * propTypes
+ * @type {object}
+ */
+NewLine.propTypes = {
+  // dispatch props
+  updateCurrentLine: PropTypes.func.isRequired,
+}
+
+/**
+ * map dispatch to props
+ * @param  {function} dispatch dispatcher
+ * @return {object}            mapped autobind action creators
+ */
+const mapDispatchToProps = dispatch => ({
+  updateCurrentLine: uri => dispatch({
+    type: UPDATE_CURRENT_LINE,
+    payload: { uri },
+  }),
+})
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(NewLine)

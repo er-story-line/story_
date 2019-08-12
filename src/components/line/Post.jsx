@@ -18,22 +18,22 @@ class Post extends React.Component {
       .use(Highlight)
       .use(Reactify, { createElement: React.createElement })
 
-    this.state = {
+    /* this.state = {
       date: '',
       content: '...',
-    }
+    } */
   }
 
-  componentDidMount() {
+  /* componentDidMount() {
     this.refreshSelf()
-  }
+  } */
 
   onError(err) {
     const { onError } = this.props
     onError(err)
   }
 
-  populate(post) {
+  /* populate(post) {
     this.setState(() => {
       const { title, date, content } = post
 
@@ -56,10 +56,12 @@ class Post extends React.Component {
       .get(resource)
       .then(post => this.populate(post))
       .catch(err => this.onError(err))
-  }
+  } */
 
   render() {
-    const { date, content } = this.state
+    // const { date, content } = this.state
+    const { resource, postRepo } = this.props
+    const { date, content } = postRepo.get(resource)
 
     const htmlContent = this.processor.processSync(content).contents
 

@@ -27,14 +27,6 @@ class PostList extends React.Component {
     onError(err)
   }
 
-  setItems(items) {
-    this.setState(() => ({
-      items: {
-        raw: [...items.raw],
-      },
-    }))
-  }
-
   onPostAdd(update) {
     const { item } = update
     console.log('Subscribed line received update', update)
@@ -53,6 +45,14 @@ class PostList extends React.Component {
     })
   }
 
+  setItems(items) {
+    this.setState(() => ({
+      items: {
+        raw: [...items.raw],
+      },
+    }))
+  }
+
   hookupEvents(lineRepo, resource) {
     lineRepo.events.off('post.add', this.onPostAdd)
     lineRepo.events.on('post.add', this.onPostAdd)
@@ -67,15 +67,13 @@ class PostList extends React.Component {
 
     this.hookupEvents(lineRepo, resource)
 
-    const items = await lineRepo.getIndex(resource)
-    this.setItems(items)
+    /* const items = await lineRepo.getIndex(resource)
+    this.setItems(items) */
   }
 
   render() {
-    let {
-      items: { raw },
-    } = this.state
-    const { postRepo } = this.props
+    const { postRepo, lineRepo } = this.props
+    let { raw } = lineRepo.getIndex(this.props.resource)
 
     raw = raw || []
 

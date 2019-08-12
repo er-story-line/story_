@@ -56,30 +56,42 @@ class LineRepo {
     this.lines[mdResource] = line
     store.dispatch(
       actionCreators.createNewLine({
-        idxResource, mdResource, idx, line,
+        idxResource,
+        mdResource,
+        idx,
+        line,
       }),
     )
-    return new Promise(res => res(line, idx))
+    return new Promise(res => res({
+      idxResource,
+      mdResource,
+      idx,
+      line,
+    }))
   }
 
   updateIndex(resource, index) {
     this.indices[resource] = index
     this.events.emit('index.update', { resource, index })
+    store.dispatch(actionCreators.updateIndex({ resource, index }))
     return new Promise(res => res(resource, index))
   }
 
   updateMetadata(resource, line) {
     this.lines[resource] = line
     this.events.emit('line.update', { resource, line })
+    store.dispatch(actionCreators.updateMetadata({ resource, line }))
     return new Promise(res => res(resource, line))
   }
 
   getMetadata(uri) {
-    return new Promise(res => res(this.lines[uri]))
+    return store.getState().line.lines[uri]
+    // return new Promise(res => res(this.lines[uri]))
   }
 
   getIndex(uri) {
-    return new Promise(res => res(this.indices[uri]))
+    return store.getState().line.indices[uri]
+    // return new Promise(res => res(this.indices[uri]))
   }
 
   async addPost(lineUri, post) {

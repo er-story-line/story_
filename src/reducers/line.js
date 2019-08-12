@@ -13,6 +13,7 @@ const initialState = {
  * action types
  */
 export const CREATE_LINE = 'LINE.CREATE_LINE'
+export const ADD_INDEX = 'LINE.ADD_INDEX'
 export const UPDATE_INDEX = 'LINE.UPDATE_INDEX'
 export const UPDATE_METADATA = 'LINE.UPDATE_METADATA'
 
@@ -30,6 +31,10 @@ export const actionCreators = {
       idx,
       line,
     },
+  }),
+  addIndex: ({ resource, index }) => ({
+    type: ADD_INDEX,
+    payload: { resource, index },
   }),
   updateIndex: ({ resource, index }) => ({
     type: UPDATE_INDEX,
@@ -61,12 +66,20 @@ export const partialReducer = (state = initialState, action) => {
         indices: { $merge: { [idxResource]: { ...idx } } },
       })
     }
-    case UPDATE_INDEX: {
+    case ADD_INDEX: {
       const {
         payload: { resource, index },
       } = action
       return update(state, {
         indices: { $merge: { [resource]: { ...index } } },
+      })
+    }
+    case UPDATE_INDEX: {
+      const {
+        payload: { resource, index },
+      } = action
+      return update(state, {
+        indices: { [resource]: { raw: { $push: [index] } } },
       })
     }
     case UPDATE_METADATA: {

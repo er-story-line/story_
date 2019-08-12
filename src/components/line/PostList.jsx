@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Card } from 'semantic-ui-react'
 import Post from './Post'
 
@@ -7,19 +8,29 @@ class PostList extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      items: [],
-    }
-
     this.onError = this.onError.bind(this)
-    this.setItems = this.setItems.bind(this)
     this.onPostAdd = this.onPostAdd.bind(this)
     this.hookupEvents = this.hookupEvents.bind(this)
-    this.refreshItems = this.refreshItems.bind(this)
   }
 
   componentDidMount() {
-    this.refreshItems()
+    const { resource, lineRepo } = this.props
+    if (!resource) {
+      return
+    }
+
+    this.hookupEvents(lineRepo, resource)
+  }
+
+  /**
+   * shouldComponentUpdate
+   * @param  {object} nextProps next props
+   * @param  {object} nextState next state
+   * @return {boolean}          should component update
+   */
+  shouldComponentUpdate(nextProps) {
+    console.log('shouldComponentUpdate')
+    return true
   }
 
   onError(err) {
@@ -28,29 +39,18 @@ class PostList extends React.Component {
   }
 
   onPostAdd(update) {
-    const { item } = update
+    const { item, post } = update
+    const { postRepo, lineRepo, index } = this.props
     console.log('Subscribed line received update', update)
 
-    this.setState((state) => {
-      const {
-        items: { raw },
-      } = state
-      const newRaw = [...raw]
-      newRaw.push(item)
-      return {
-        items: {
-          raw: newRaw,
-        },
-      }
-    })
-  }
-
-  setItems(items) {
-    this.setState(() => ({
-      items: {
-        raw: [...items.raw],
-      },
-    }))
+    /* postRepo
+      .add(post)
+      .then(res => console.log(res))
+      .catch(err => console.error(err))
+    lineRepo
+      .updateIndex(index, item)
+      .then(res => console.log(res))
+      .catch(err => console.error(err)) */
   }
 
   hookupEvents(lineRepo, resource) {
@@ -58,26 +58,11 @@ class PostList extends React.Component {
     lineRepo.events.on('post.add', this.onPostAdd)
   }
 
-  async refreshItems() {
-    const { resource, lineRepo } = this.props
-
-    if (!resource) {
-      return
-    }
-
-    this.hookupEvents(lineRepo, resource)
-
-    /* const items = await lineRepo.getIndex(resource)
-    this.setItems(items) */
-  }
-
   render() {
-    const { postRepo, lineRepo } = this.props
-    let { raw } = lineRepo.getIndex(this.props.resource)
+    const { postRepo, indices, index } = this.props
+    console.log('re-render')
 
-    raw = raw || []
-
-    const lis = raw.map((item) => {
+    const lis = indices[index].raw.map((item) => {
       const { resource } = item
 
       return <Post key={resource} resource={resource} postRepo={postRepo} />
@@ -89,11 +74,15 @@ class PostList extends React.Component {
 
 PostList.propTypes = {
   resource: PropTypes.string.isRequired,
+  index: PropTypes.string.isRequired,
+  indices: PropTypes.object.isRequired,
   lineRepo: PropTypes.shape({
     getIndex: PropTypes.func.isRequired,
+    updateIndex: PropTypes.func.isRequired,
   }).isRequired,
   postRepo: PropTypes.shape({
     get: PropTypes.func.isRequired,
+    add: PropTypes.func.isRequired,
   }).isRequired,
   onError: PropTypes.func,
 }
@@ -102,4 +91,18 @@ PostList.defaultProps = {
   onError: err => console.error('error', err),
 }
 
-export default PostList
+/**
+ * map state to props
+ * @param  {object} state    state tree
+ * @return {object}          state props
+ */
+const mapStateToProps = (state) => {
+  const currentLine = state.account.accounts[state.account.curAccountIndex].lines.current.uri
+  const { index } = state.line.lines[currentLine]
+  const { indices } = state.line
+  return {
+    indices,
+    index,
+  }
+}
+export default connect(mapStateToProps)(PostList)

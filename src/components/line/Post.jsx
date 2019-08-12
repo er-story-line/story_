@@ -17,49 +17,15 @@ class Post extends React.Component {
       .use(Rehype)
       .use(Highlight)
       .use(Reactify, { createElement: React.createElement })
-
-    /* this.state = {
-      date: '',
-      content: '...',
-    } */
   }
 
-  /* componentDidMount() {
-    this.refreshSelf()
-  } */
 
   onError(err) {
     const { onError } = this.props
     onError(err)
   }
 
-  /* populate(post) {
-    this.setState(() => {
-      const { title, date, content } = post
-
-      return {
-        title,
-        date,
-        content,
-      }
-    })
-  }
-
-  refreshSelf() {
-    const { resource, postRepo } = this.props
-
-    if (!resource) {
-      return
-    }
-
-    postRepo
-      .get(resource)
-      .then(post => this.populate(post))
-      .catch(err => this.onError(err))
-  } */
-
   render() {
-    // const { date, content } = this.state
     const { resource, postRepo } = this.props
     const { date, content } = postRepo.get(resource)
 

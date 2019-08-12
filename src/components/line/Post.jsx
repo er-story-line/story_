@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Moment from 'moment'
 import Unified from 'unified'
 import Parse from 'remark-parse'
@@ -19,15 +20,14 @@ class Post extends React.Component {
       .use(Reactify, { createElement: React.createElement })
   }
 
-
   onError(err) {
     const { onError } = this.props
     onError(err)
   }
 
   render() {
-    const { resource, postRepo } = this.props
-    const { date, content } = postRepo.get(resource)
+    const { resource, posts } = this.props
+    const { date, content } = posts[resource]
 
     const htmlContent = this.processor.processSync(content).contents
 
@@ -50,9 +50,14 @@ class Post extends React.Component {
 
 Post.propTypes = {
   resource: PropTypes.string.isRequired,
-  postRepo: PropTypes.shape({
-    get: PropTypes.func.isRequired,
-  }).isRequired,
+  posts: PropTypes.objectOf(
+    PropTypes.shape({
+      date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
+        .isRequired,
+      type: PropTypes.string,
+      content: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   onError: PropTypes.func,
 }
 
@@ -60,4 +65,13 @@ Post.defaultProps = {
   onError: err => console.error('error', err),
 }
 
-export default Post
+/**
+ * map state to props
+ * @param  {object} state    state tree
+ * @return {object}          state props
+ */
+const mapStateToProps = state => ({
+  posts: state.posts.posts,
+})
+
+export default connect(mapStateToProps)(Post)

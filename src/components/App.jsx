@@ -15,9 +15,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.accountRepo = RepoFactory.getAccountRepo()
     this.lineRepo = RepoFactory.getLineRepo()
-    this.postRepo = RepoFactory.getPostRepo()
 
     // Import test data
     if (process.env.NODE_ENV === 'development') {
@@ -42,7 +40,6 @@ class App extends React.Component {
           {uri && (
             <EditableLine
               resource={uri}
-              postRepo={this.postRepo}
               lineRepo={this.lineRepo}
             />
           )}
@@ -73,7 +70,8 @@ App.defaultProps = () => ({
 const mapStateToProps = (state) => {
   let res = null
   if (state.account.accounts[state.account.curAccountIndex]) {
-    res = state.account.accounts[state.account.curAccountIndex].lines.current.uri
+    const curAccount = state.account.accounts[state.account.curAccountIndex]
+    res = curAccount.lines.current.uri
   }
   return { uri: res }
 }

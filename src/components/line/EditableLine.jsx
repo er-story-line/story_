@@ -21,6 +21,11 @@ class EditableLine extends React.Component {
     this.scrollToEditor()
   }
 
+  onError(err) {
+    const { onError } = this.props
+    onError(err)
+  }
+
   setEditorElement(el) {
     this.editorElement = el
   }
@@ -29,27 +34,13 @@ class EditableLine extends React.Component {
     this.editorElement.scrollIntoView({ behavior: 'smooth' })
   }
 
-  onError(err) {
-    const { onError } = this.props
-    onError(err)
-  }
-
   render() {
-    const { resource, postRepo, lineRepo } = this.props
-    const { title, index } = lineRepo.getMetadata(resource)
-    console.log(title, 'title')
-    console.log(index, 'index')
+    const { resource, lineRepo } = this.props
+    const { title } = lineRepo.getMetadata(resource)
 
     return (
       <>
-        {resource && title && (
-          <Line
-            title={title}
-            index={index}
-            postRepo={postRepo}
-            lineRepo={lineRepo}
-          />
-        )}
+        {resource && title && <Line title={title} />}
         <EditorContainer ref={this.setEditorElement}>
           <PostEditor resource={resource} lineRepo={lineRepo} />
         </EditorContainer>
@@ -64,9 +55,11 @@ EditableLine.propTypes = {
     getMetadata: PropTypes.func.isRequired,
     getIndex: PropTypes.func.isRequired,
   }).isRequired,
-  postRepo: PropTypes.shape({
-    get: PropTypes.func.isRequired,
-  }).isRequired,
+  onError: PropTypes.func,
+}
+
+EditableLine.defaultProps = {
+  onError: err => console.error('error', err),
 }
 
 export default EditableLine

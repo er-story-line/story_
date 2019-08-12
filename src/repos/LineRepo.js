@@ -5,7 +5,6 @@ import { actionCreators } from 'src/reducers/line'
 
 class LineRepo {
   constructor(postRepo) {
-    this.root = 'https://story_.com/line/'
     this.postRepo = postRepo
 
     this.createIndexItem = this.createIndexItem.bind(this)
@@ -45,8 +44,8 @@ class LineRepo {
   add(title) {
     const mdId = UUID()
     const idxId = UUID()
-    const mdResource = `${this.root}metadata/${mdId}`
-    const idxResource = `${this.root}idx/${idxId}`
+    const mdResource = `${store.getState().line.root}metadata/${mdId}`
+    const idxResource = `${store.getState().line.root}idx/${idxId}`
 
     const idx = this.createEmptyIndex()
     const line = this.createNewLine(title, idxResource)
@@ -86,12 +85,10 @@ class LineRepo {
 
   getMetadata(uri) {
     return store.getState().line.lines[uri]
-    // return new Promise(res => res(this.lines[uri]))
   }
 
   getIndex(uri) {
     return store.getState().line.indices[uri]
-    // return new Promise(res => res(this.indices[uri]))
   }
 
   async addPost(lineUri, post) {

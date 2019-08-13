@@ -1,7 +1,7 @@
 import UUID from 'uuid'
 import Emitter from 'emittery'
 import store from 'src/store'
-import { actionCreators } from 'src/reducers/line'
+import { actionCreators } from 'src/reducers/lines'
 
 class LineRepo {
   constructor(postRepo) {
@@ -44,8 +44,8 @@ class LineRepo {
   add(title) {
     const mdId = UUID()
     const idxId = UUID()
-    const mdResource = `${store.getState().line.root}metadata/${mdId}`
-    const idxResource = `${store.getState().line.root}idx/${idxId}`
+    const mdResource = `${store.getState().lines.root}metadata/${mdId}`
+    const idxResource = `${store.getState().lines.root}idx/${idxId}`
 
     const idx = this.createEmptyIndex()
     const line = this.createNewLine(title, idxResource)
@@ -84,11 +84,11 @@ class LineRepo {
   }
 
   getMetadata(uri) {
-    return store.getState().line.lines[uri]
+    return store.getState().lines.lines[uri]
   }
 
   getIndex(uri) {
-    return store.getState().line.indices[uri]
+    return store.getState().lines.indices[uri]
   }
 
   async addPost(lineUri, post) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { UPDATE_CURRENT_LINE } from 'src/reducers/account'
+import { UPDATE_CURRENT_LINE } from 'src/reducers/accounts'
 import {
   MenuItem, Icon, Button, Input,
 } from 'semantic-ui-react'
@@ -14,6 +14,8 @@ const MenuItemFlush = styled(MenuItem)`
   }
 `
 const MenuItemFlushLeft = styled(MenuItem)`
+  max-width: 250px;
+  width: 100%;
   padding-top: 8px !important;
   padding-bottom: 8px !important;
 `
@@ -56,12 +58,12 @@ const IconRelWrapper = styled.div`
 const FadeOutIcon = styled.div`
   opacity: 1;
   position: absolute;
-  animation: ${FadeOut()} 0.3s linear 0s 1 normal forwards;
+  animation: ${FadeOut()} 0.2s linear 0s 1 normal forwards;
 `
 const FadeInIcon = styled.div`
   opacity: 0;
   position: absolute;
-  animation: ${FadeIn()} 0.3s linear 0s 1 normal forwards;
+  animation: ${FadeIn()} 0.2s linear 0s 1 normal forwards;
 `
 
 const SlideOut = styled.div`
@@ -91,11 +93,11 @@ class NewLine extends React.Component {
     const { updateCurrentLine } = this.props
     try {
       const { mdResource } = await this.lineRepo.add(title)
-      this.setState(({
+      this.setState({
         title: '',
         expand: false,
         collapse: true,
-      }))
+      })
       updateCurrentLine(mdResource)
     } catch (error) {
       console.error(error)
@@ -164,14 +166,7 @@ class NewLine extends React.Component {
       dom = (
         <>
           <MenuItem onClick={this.toggleCreate}>
-            <IconRelWrapper>
-              <FadeOutIcon>
-                <CenteredIcon name="minus" />
-              </FadeOutIcon>
-              <FadeInIcon>
-                <CenteredIcon name="add" />
-              </FadeInIcon>
-            </IconRelWrapper>
+            <CenteredIcon name="add" />
           </MenuItem>
         </>
       )

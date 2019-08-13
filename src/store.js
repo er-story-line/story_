@@ -3,8 +3,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 /**
  * Reducers
  */
-import lineReducer from 'src/reducers/line'
-import accountReducer from 'src/reducers/account'
+import lineReducer from 'src/reducers/lines'
+import accountReducer from 'src/reducers/accounts'
 import postsReducer from 'src/reducers/posts'
 
 // Logger with default options
@@ -16,8 +16,8 @@ import logger from 'redux-logger'
  */
 const store = createStore(
   combineReducers({
-    line: lineReducer,
-    account: accountReducer,
+    lines: lineReducer,
+    accounts: accountReducer,
     posts: postsReducer,
   }),
   applyMiddleware(process.env.NODE_ENV === 'development' && logger),

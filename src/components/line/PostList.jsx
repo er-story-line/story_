@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getCurrentLineRaw } from 'src/selectors/lines'
 import { Card } from 'semantic-ui-react'
 import Post from './Post'
 
@@ -49,12 +50,6 @@ PostList.defaultProps = {
  * @param  {object} state    state tree
  * @return {object}          state props
  */
-const mapStateToProps = (state) => {
-  const curAccount = state.account.accounts[state.account.curAccountIndex]
-  const currentLine = curAccount.lines.current.uri
-  const { index } = state.line.lines[currentLine]
-  const { raw } = state.line.indices[index]
-  return { raw: raw || [] }
-}
+const mapStateToProps = state => ({ raw: getCurrentLineRaw(state) })
 
 export default connect(mapStateToProps)(PostList)

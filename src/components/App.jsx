@@ -34,9 +34,7 @@ class App extends React.Component {
 
     return (
       <LineWrapper>
-        <TopMenuBar>
-          <MenuItem header>Story_ (aka Storyline)</MenuItem>
-        </TopMenuBar>
+        <TopMenuBar />
         <Container text style={{ margin: '2em' }}>
           {uri && <EditableLine resource={uri} lineRepo={this.lineRepo} />}
         </Container>

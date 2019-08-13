@@ -48,14 +48,10 @@ topMenuBar.propTypes = {
       title: PropTypes.string.isRequired,
       index: PropTypes.string.isRequired,
     }).isRequired,
-  ),
+  ).isRequired,
   curIndex: PropTypes.string.isRequired,
   updateCurrentLine: PropTypes.func.isRequired,
 }
-
-topMenuBar.defaultProps = () => ({
-  children: null,
-})
 
 /**
  * map state to props

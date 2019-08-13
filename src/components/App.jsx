@@ -1,27 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Container, MenuItem } from 'semantic-ui-react'
 import RepoFactory from 'src/repos/RepoFactory'
-import TopMenuBar from './commons/TopMenuBar'
-import EditableLine from './line/EditableLine'
 import Importer from 'src/lib/Importer'
 import accounts from 'src/testdata/accounts'
 import lines from 'src/testdata/lines'
 import posts from 'src/testdata/posts'
+import EditableLine from './line/EditableLine'
+import TopMenuBar from './commons/topMenuBar/TopMenuBar'
 import LineWrapper from './line/LineWrapper'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.accountRepo = RepoFactory.getAccountRepo()
     this.lineRepo = RepoFactory.getLineRepo()
-    this.postRepo = RepoFactory.getPostRepo()
-
-    this.state = {
-      currentLine: '',
-      lineMeta: {},
-      error: null,
-    }
 
     // Import test data
     if (process.env.NODE_ENV === 'development') {
@@ -34,50 +28,18 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.refreshFromUser()
-  }
-
-  setError(err) {
-    this.setState({ error: err }, () => {
-      const { error } = this.state
-      console.error(error)
-    })
-  }
-
-  refreshFromUser() {
-    this.accountRepo
-      .get('testy')
-      .then(userdata => this.loadFromUserData(userdata))
-      .catch(err => this.setError(err))
-  }
-
-  loadFromUserData(userdata) {
-    const {
-      lines: {
-        current: { uri, meta },
-      },
-    } = userdata
-
-    this.setState({
-      currentLine: uri,
-      lineMeta: meta,
-    })
-  }
-
   render() {
-    const { currentLine, lineMeta } = this.state
+    const { uri } = this.props
 
     return (
-      <LineWrapper {...lineMeta}>
+      <LineWrapper>
         <TopMenuBar>
           <MenuItem header>Story_ (aka Storyline)</MenuItem>
         </TopMenuBar>
         <Container text style={{ margin: '2em' }}>
-          {currentLine && (
+          {uri && (
             <EditableLine
-              resource={currentLine}
-              postRepo={this.postRepo}
+              resource={uri}
               lineRepo={this.lineRepo}
             />
           )}
@@ -87,4 +49,31 @@ class App extends React.Component {
   }
 }
 
-export default App
+/**
+ * propTypes
+ * @type {object}
+ */
+App.propTypes = {
+  // state props
+  uri: PropTypes.string,
+}
+
+App.defaultProps = () => ({
+  uri: null,
+})
+
+/**
+ * map state to props
+ * @param  {object} state    state tree
+ * @return {object}          state props
+ */
+const mapStateToProps = (state) => {
+  let res = null
+  if (state.account.accounts[state.account.curAccountIndex]) {
+    const curAccount = state.account.accounts[state.account.curAccountIndex]
+    res = curAccount.lines.current.uri
+  }
+  return { uri: res }
+}
+
+export default connect(mapStateToProps)(App)

@@ -10,7 +10,11 @@ const style = {
   borderRight: 'none',
 }
 
-const TopMenuBar = ({ children }) => <Menu style={style}>{children}</Menu>
+const TopMenuBar = ({ children }) => (
+  <Menu size="massive" style={style}>
+    {children}
+  </Menu>
+)
 
 TopMenuBar.propTypes = {
   children: PropTypes.oneOfType([

@@ -34,6 +34,15 @@ class PostEditor extends React.Component {
     this.onSave = this.onSave.bind(this)
   }
 
+  async onSave(md) {
+    const { lineRepo, resource } = this.props
+    await lineRepo.addPost(resource, {
+      content: md,
+      type: 'markdown',
+    })
+    this.reset()
+  }
+
   reset() {
     const i = Math.floor(Math.random() * famousFirstLines.length)
     const firstLine = famousFirstLines[i]
@@ -44,17 +53,8 @@ class PostEditor extends React.Component {
     })
   }
 
-  async onSave(md) {
-    const { lineRepo, resource } = this.props
-    const update = await lineRepo.addPost(resource, {
-      content: md,
-    })
-    this.reset()
-  }
-
   render() {
     const { placeholder, content, key } = this.state
-    console.log('re-rendering editor')
 
     return (
       <Card fluid>
@@ -74,8 +74,8 @@ class PostEditor extends React.Component {
 PostEditor.propTypes = {
   resource: PropTypes.string.isRequired,
   lineRepo: PropTypes.shape({
-    add: PropTypes.func.isRequired,
-  }),
+    addPost: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default PostEditor

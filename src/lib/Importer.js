@@ -26,7 +26,7 @@ function importLines(repo, lineData) {
   const { indices, lines } = lineData
 
   if (indices) {
-    importKeyData(repo, indices, repo.updateIndex)
+    importKeyData(repo, indices, repo.addIndex)
   }
 
   if (lines) {

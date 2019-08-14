@@ -11,7 +11,7 @@ const style = {
 }
 
 const TopMenuBar = ({ children }) => (
-  <Menu stackable size="massive" style={style}>
+  <Menu stackable fixed="top" size="massive" style={style}>
     {children}
   </Menu>
 )

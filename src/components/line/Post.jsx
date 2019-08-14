@@ -7,7 +7,8 @@ import Parse from 'remark-parse'
 import Rehype from 'remark-rehype'
 import Highlight from 'rehype-highlight'
 import Reactify from 'rehype-react'
-import { Card, Feed } from 'semantic-ui-react'
+import Card from 'src/styled/Card'
+import { Feed } from 'semantic-ui-react'
 
 class Post extends React.Component {
   constructor(props) {

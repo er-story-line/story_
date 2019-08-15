@@ -1,5 +1,5 @@
 import store from 'src/store'
-import { actionCreators } from 'src/reducers/account'
+import { actionCreators } from 'src/reducers/accounts'
 
 class AccountRepo {
   update(resource, account) {
@@ -8,7 +8,7 @@ class AccountRepo {
   }
 
   get(username) {
-    return store.getState().account.accounts[username]
+    return store.getState().accounts.accounts[username]
   }
 }
 

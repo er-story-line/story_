@@ -8,7 +8,13 @@ import accountReducer from 'src/reducers/accounts'
 import postsReducer from 'src/reducers/posts'
 
 // Logger with default options
-import logger from 'redux-logger'
+import logger from 'redux-logger' // eslint-disable-line import/no-extraneous-dependencies
+
+let middlewares = []
+
+if (process.env.NODE_ENV === 'development') {
+  middlewares = [logger]
+}
 
 /**
  * store
@@ -20,7 +26,7 @@ const store = createStore(
     accounts: accountReducer,
     posts: postsReducer,
   }),
-  applyMiddleware(process.env.NODE_ENV === 'development' && logger),
+  applyMiddleware(...middlewares),
 )
 
 /**

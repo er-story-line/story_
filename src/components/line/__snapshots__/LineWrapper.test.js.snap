@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LineWrapper renders 1`] = `
+.c0 {
+  margin-top: 100px;
+  height: 100%;
+}
+
+<div
+  className="c0"
+/>
+`;

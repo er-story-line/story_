@@ -116,7 +116,7 @@ export default () => (
           <ActionsUL>
             <LI>
               <a>
-                <span>Can't log in?</span>
+                <span>{'Can\'t log in?'}</span>
               </a>
             </LI>
             <LI>

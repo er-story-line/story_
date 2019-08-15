@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line renders 1`] = `
+Array [
+  <h1>
+    My Line
+  </h1>,
+  "PostList",
+]
+`;

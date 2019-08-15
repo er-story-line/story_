@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> renders correctly 1`] = `
+.c2 {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  color: rgb(255,255,255);
+  padding: 10vh 0px 6vh;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 24px;
+  color: rgb(94,108,132);
+  font-size: 16px;
+}
+
+.c5 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  line-height: 20px;
+  height: 20px;
+  margin-top: 8px;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.c7 {
+  color: rgb(107,119,140);
+  padding-top: 24px;
+  margin-top: 24px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
+  border-top: 1px solid rgb(213,216,222);
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  list-style: none;
+  padding: 0px;
+}
+
+.c8 > li + li::before {
+  content: '•';
+  margin: 0px 8px;
+}
+
+.c9 {
+  display: list-item;
+  text-align: match-parent;
+}
+
+.c3 {
+  box-shadow: 0 4px 10px 1px rgba(41,49,89,.2) !important;
+  max-width: 400px !important;
+  width: 100% !important;
+  margin: 20px !important;
+  padding: 24px 40px !important;
+}
+
+.c0 {
+  height: 100%;
+  position: relative;
+  padding-bottom: 0;
+  background: transparent;
+  z-index: 0;
+}
+
+.c0::before {
+  background-image: linear-gradient(36deg,#9864ff 20%,#0d11e9 92%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: -17%;
+  content: '';
+  z-index: -1;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-transform: skewY(-2.5deg);
+  -ms-transform: skewY(-2.5deg);
+  transform: skewY(-2.5deg);
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+}
+
+.c6 .continue-button {
+  margin-top: 2em !important;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1"
+  >
+    <header
+      className="c2"
+    >
+      <span>
+        STORY_
+      </span>
+    </header>
+    <div
+      className="ui purple card Card__LineCard-wa5yk7-0 c3"
+      onClick={[Function]}
+    >
+      <div
+        className="c4"
+      >
+        <div>
+          Log in to continue to:
+        </div>
+        <div
+          className="c5"
+        >
+          story_
+        </div>
+      </div>
+      <div
+        className="c6"
+      >
+        <div
+          className="ui input"
+        >
+          <input
+            onChange={[Function]}
+            placeholder="Enter email"
+            type="text"
+          />
+        </div>
+        <button
+          className="ui violet large fluid button continue-button"
+          onClick={[Function]}
+        >
+          Continue
+        </button>
+      </div>
+      <div
+        className="c7"
+      >
+        <ul
+          className="c8"
+        >
+          <li
+            className="c9"
+          >
+            <a>
+              <span>
+                Can't log in?
+              </span>
+            </a>
+          </li>
+          <li
+            className="c9"
+          >
+            <a>
+              <span>
+                Sign up for an account
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;

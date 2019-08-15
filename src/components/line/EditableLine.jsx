@@ -1,8 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { getCurrentLineUri } from 'src/selectors/accounts'
+import { Container } from 'semantic-ui-react'
 import styled from 'styled-components'
-import Line from './Line'
+import TopMenuBar from 'src/components/commons/topMenuBar/TopMenuBar'
+import LineWrapper from 'src/components/line/LineWrapper'
+import RepoFactory from 'src/repos/RepoFactory'
 import PostEditor from '../editor/PostEditor'
+import Line from './Line'
 
 const EditorContainer = styled.div`
   margin-top: 2em;
@@ -11,6 +17,8 @@ const EditorContainer = styled.div`
 class EditableLine extends React.Component {
   constructor(props) {
     super(props)
+
+    this.lineRepo = RepoFactory.getLineRepo()
 
     this.setEditorElement = this.setEditorElement.bind(this)
     this.scrollToEditor = this.scrollToEditor.bind(this)
@@ -35,31 +43,41 @@ class EditableLine extends React.Component {
   }
 
   render() {
-    const { resource, lineRepo } = this.props
-    const { title } = lineRepo.getMetadata(resource)
+    const { resource } = this.props
+    const { title } = this.lineRepo.getMetadata(resource)
 
     return (
       <>
-        {resource && title && <Line title={title} />}
-        <EditorContainer ref={this.setEditorElement}>
-          <PostEditor resource={resource} lineRepo={lineRepo} />
-        </EditorContainer>
+        <TopMenuBar />
+        <LineWrapper>
+          <Container text style={{ margin: '2em' }}>
+            {resource && title && <Line title={title} />}
+            <EditorContainer ref={this.setEditorElement}>
+              <PostEditor resource={resource} lineRepo={this.lineRepo} />
+            </EditorContainer>
+          </Container>
+        </LineWrapper>
       </>
     )
   }
 }
 
 EditableLine.propTypes = {
-  resource: PropTypes.string.isRequired,
-  lineRepo: PropTypes.shape({
-    getMetadata: PropTypes.func.isRequired,
-    getIndex: PropTypes.func.isRequired,
-  }).isRequired,
+  // state props
+  resource: PropTypes.string,
   onError: PropTypes.func,
 }
 
 EditableLine.defaultProps = {
+  resource: null,
   onError: err => console.error('error', err),
 }
 
-export default EditableLine
+/**
+ * map state to props
+ * @param  {object} state    state tree
+ * @return {object}          state props
+ */
+const mapStateToProps = state => ({ resource: getCurrentLineUri(state) })
+
+export default connect(mapStateToProps)(EditableLine)

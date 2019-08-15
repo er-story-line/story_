@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const LineWrapper = styled.div`
+  margin-top: 100px;
   background: ${props => props.backgroundColor};
   height: 100%;
 `

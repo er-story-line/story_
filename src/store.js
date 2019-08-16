@@ -6,6 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import lineReducer from 'src/reducers/lines'
 import accountReducer from 'src/reducers/accounts'
 import postsReducer from 'src/reducers/posts'
+import modalReducer from 'src/reducers/modal'
 
 // Logger with default options
 import logger from 'redux-logger' // eslint-disable-line import/no-extraneous-dependencies
@@ -25,6 +26,7 @@ const store = createStore(
     lines: lineReducer,
     accounts: accountReducer,
     posts: postsReducer,
+    modal: modalReducer,
   }),
   applyMiddleware(...middlewares),
 )

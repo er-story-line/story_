@@ -1,6 +1,8 @@
 // Edited from https://github.com/facebook/draft-js/blob/master/examples/draft-0-10-0/rich/rich.html
 
 import React from 'react'
+import { connect } from 'react-redux'
+import { actionCreators } from 'src/reducers/modal'
 import PropTypes from 'prop-types'
 import {
   Editor,
@@ -13,6 +15,8 @@ import { draftToMarkdown } from 'markdown-draft-js'
 import BlockStyleControls from './BlockStyleControls'
 import ActionControls from './ActionControls'
 // import InlineStyleControls from './InlineStyleControls'
+
+const { openModal } = actionCreators
 
 // Custom overrides for "code" style.
 const styleMap = {
@@ -66,7 +70,8 @@ class RichTextEditor extends React.Component {
 
   onSave() {
     const { onSave } = this.props
-    onSave(this.state.currentMd)
+    const { currentMd } = this.state
+    onSave(currentMd)
   }
 
   clearPlaceholder() {
@@ -101,6 +106,13 @@ class RichTextEditor extends React.Component {
 
   toggleBlockType(blockType) {
     const { editorState } = this.state
+    const { onMediaSelect } = this.props
+
+    if (blockType === 'media') {
+      onMediaSelect()
+      return
+    }
+
     this.onChange(RichUtils.toggleBlockType(editorState, blockType))
   }
 
@@ -162,11 +174,20 @@ class RichTextEditor extends React.Component {
 
 RichTextEditor.propTypes = {
   placeholder: PropTypes.string.isRequired,
-  onSave: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
+  onMediaSelect: PropTypes.func.isRequired,
 }
 
-RichTextEditor.defaultProps = {
-  onSave: () => {},
-}
+/**
+ * map dispatch to props
+ * @param  {function} dispatch dispatcher
+ * @return {object}            mapped autobind action creators
+ */
+const mapDispatchToProps = dispatch => ({
+  onMediaSelect: () => dispatch(openModal('MediaSelect')),
+})
 
-export default RichTextEditor
+export default connect(
+  null,
+  mapDispatchToProps,
+)(RichTextEditor)

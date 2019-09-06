@@ -5,6 +5,7 @@ import { getCurrentLineUri } from 'src/selectors/accounts'
 import { Container, Modal } from 'semantic-ui-react'
 import styled from 'styled-components'
 import TopMenuBar from 'src/components/commons/topMenuBar/TopMenuBar'
+import HeaderImg from 'src/components/commons/headerImg/HeaderImg'
 import LineWrapper from 'src/components/line/LineWrapper'
 import RepoFactory from 'src/repos/RepoFactory'
 import MediaSelect from 'src/components/mediaselect/MediaSelect'
@@ -25,12 +26,7 @@ class EditableLine extends React.Component {
     this.lineRepo = RepoFactory.getLineRepo()
 
     this.setEditorElement = this.setEditorElement.bind(this)
-    this.scrollToEditor = this.scrollToEditor.bind(this)
     this.onError = this.onError.bind(this)
-  }
-
-  componentDidUpdate() {
-    this.scrollToEditor()
   }
 
   onError(err) {
@@ -40,10 +36,6 @@ class EditableLine extends React.Component {
 
   setEditorElement(el) {
     this.editorElement = el
-  }
-
-  scrollToEditor() {
-    this.editorElement.scrollIntoView({ behavior: 'smooth' })
   }
 
   render() {
@@ -66,6 +58,7 @@ class EditableLine extends React.Component {
     return (
       <>
         <TopMenuBar />
+        {/* <HeaderImg /> */}
         <LineWrapper>
           <Container text style={{ margin: '2em' }}>
             {resource && title && <Line title={title} />}

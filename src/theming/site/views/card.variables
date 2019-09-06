@@ -1,0 +1,21 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+/* Shadow */
+@shadowDistance: 0px;
+@shadowBoxShadow: 0px @shadowDistance 0px 0px @solidBorderColor;
+
+/* Card */
+@margin: 0.2em 0em;
+@borderWidth: 0px;
+@borderShadow: 0px 0px 0px @borderWidth @solidBorderColor;
+@boxShadow:
+  @shadowBoxShadow,
+  @borderShadow
+;
+@border: none;
+
+/* Content */
+@contentPadding: 0.5em 2em;
+@contentFontSize: 0.8em;

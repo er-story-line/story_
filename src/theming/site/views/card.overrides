@@ -1,0 +1,9 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+
+.ui.cards > .card > .content p,
+.ui.card > .content p {
+    text-align: justify;
+}

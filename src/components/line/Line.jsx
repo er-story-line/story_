@@ -1,13 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Header } from 'semantic-ui-react'
+import Styled from 'styled-components'
 import PostList from './PostList'
+
+const StyledHeader = Styled(Header)`
+  font-size: 4em;
+  margin-top: 20vh;
+  text-align: center;
+`
 
 const Line = (props) => {
   const { title } = props
 
   return (
     <>
-      <h1>{title}</h1>
+      <StyledHeader as="h1">{title}</StyledHeader>
       <PostList />
     </>
   )

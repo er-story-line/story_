@@ -8,7 +8,10 @@ import Rehype from 'remark-rehype'
 import Highlight from 'rehype-highlight'
 import Reactify from 'rehype-react'
 import Card from 'src/styled/Card'
-import { Feed } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
+import {
+  H1, H2, H3, H4, BlockQuote,
+} from './MarkdownElements'
 
 class Post extends React.Component {
   constructor(props) {
@@ -18,7 +21,16 @@ class Post extends React.Component {
       .use(Parse)
       .use(Rehype)
       .use(Highlight)
-      .use(Reactify, { createElement: React.createElement })
+      .use(Reactify, {
+        createElement: React.createElement,
+        components: {
+          h1: H1,
+          h2: H2,
+          h3: H3,
+          h4: H4,
+          blockquote: BlockQuote,
+        },
+      })
   }
 
   onError(err) {
@@ -35,13 +47,9 @@ class Post extends React.Component {
     return (
       <Card fluid>
         <Card.Content>
-          <Feed>
-            <Feed.Event>
-              <Feed.Content>
-                <Feed.Date content={Moment(date.toString()).fromNow()} />
-              </Feed.Content>
-            </Feed.Event>
-          </Feed>
+          <Label as="div" size="tiny" basic ribbon="right">
+            {Moment(date.toString()).fromNow()}
+          </Label>
           {htmlContent}
         </Card.Content>
       </Card>

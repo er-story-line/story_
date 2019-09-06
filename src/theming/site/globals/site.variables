@@ -1,0 +1,8 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@textColor: #4F412F;
+@fontName: 'PT Serif';
+@headerFont: 'PT Sans Narrow';
+@headerFontWeight: 500;

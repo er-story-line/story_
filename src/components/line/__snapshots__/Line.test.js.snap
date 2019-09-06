@@ -2,7 +2,9 @@
 
 exports[`Line renders 1`] = `
 Array [
-  <h1>
+  <h1
+    className="ui header"
+  >
     My Line
   </h1>,
   "PostList",

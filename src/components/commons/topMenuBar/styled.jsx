@@ -4,14 +4,20 @@ import { Menu } from 'semantic-ui-react'
 
 const style = {
   borderRadius: 0,
-  borderBottom: '1px solid rgba(34,36,38,.15)',
+  // borderBottom: '1px solid rgba(34,36,38,.15)',
   borderTop: 'none',
   borderLeft: 'none',
   borderRight: 'none',
+  backgroundColor: '#ffffff',
+  opacity: 0.95,
+  fontFamily: 'Bodoni 11',
+  fontWeight: 100,
+  letterSpacing: '2px',
+  fontVariant: 'small-caps',
 }
 
 const TopMenuBar = ({ children }) => (
-  <Menu stackable fixed="top" size="massive" style={style}>
+  <Menu stackable fixed="top" size="massive" secondary style={style}>
     {children}
   </Menu>
 )

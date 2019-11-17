@@ -75,7 +75,6 @@ exports[`<Login /> renders correctly 1`] = `
 }
 
 .c3 {
-  box-shadow: 0 4px 10px 1px rgba(41,49,89,.2) !important;
   max-width: 400px !important;
   width: 100% !important;
   margin: 20px !important;
@@ -166,7 +165,7 @@ exports[`<Login /> renders correctly 1`] = `
         <div
           className="c5"
         >
-          story_
+          MemGhost
         </div>
       </div>
       <div

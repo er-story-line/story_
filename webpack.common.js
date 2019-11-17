@@ -21,6 +21,9 @@ module.exports = {
       path.resolve(__dirname, 'src'),
     ],
     extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      '../../theme.config$': path.join(__dirname, 'src/theming/theme.config'),
+    },
   },
   performance: {
     maxEntrypointSize: 2 * 1024 * 1024, // 2Mb
@@ -49,6 +52,10 @@ module.exports = {
           },
           {
             loader: 'css-loader',
+            options: { sourceMap: true },
+          },
+          {
+            loader: 'less-loader',
             options: { sourceMap: true },
           },
         ],

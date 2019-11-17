@@ -1,40 +1,68 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Styled from 'styled-components'
 import { UPDATE_CURRENT_LINE } from 'src/reducers/accounts'
 import { getCurrentLine } from 'src/selectors/lines'
-import { Icon, Dropdown, Menu } from 'semantic-ui-react'
+import { Dropdown, Menu } from 'semantic-ui-react'
 import StyledComponent from './styled'
 import AddNew from './partials/newLine'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faListUl, faUserCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
+
+const BrandTitle = Styled.span`
+  padding: 0 0 5px 0;
+  font-family: 'Bodini 48';
+  letter-spacing: 3px;
+  font-weight: 900;
+  border-bottom: 1px solid #d1ad7d;
+  color: #4F412F;
+`
+
+const StyledItem = Styled(Menu.Item)`
+`
+
+const iconColor = '#4F412F'
 
 class topMenuBar extends React.PureComponent {
   render() {
-    const { lines, curIndex, updateCurrentLine } = this.props
+    const {
+      lines, curIndex, curTitle, updateCurrentLine,
+    } = this.props
     const lineKeys = Object.keys(lines)
     return (
       <StyledComponent>
-        <Dropdown item text="_s">
+        {/* <Dropdown item text={curTitle}>
           <Dropdown.Menu>
-            {lineKeys.map(resource => (
-              <Dropdown.Item
-                onClick={() => lines[resource].index !== curIndex
-                  && updateCurrentLine(resource)
-                }
-                key={resource}
-                active={lines[resource].index === curIndex}
-                text={lines[resource].title}
-              />
-            ))}
-            {lineKeys.length === 0 && (
-              <Dropdown.Item text="No Lines Yet :(" />
-            )}
+            {lineKeys
+              .filter(resource => lines[resource].index !== curIndex)
+              .map(resource => (
+                <Dropdown.Item
+                  onClick={() => updateCurrentLine(resource)}
+                  key={resource}
+                  active={lines[resource].index === curIndex}
+                  text={lines[resource].title}
+                />
+              ))}
+            <Dropdown.Item >
+              <AddNew />
+            </Dropdown.Item>
           </Dropdown.Menu>
-        </Dropdown>
-        <AddNew />
+        </Dropdown> */}
+        <Menu.Menu position="left">
+          <StyledItem>
+            <FontAwesomeIcon icon={faUserCircle} size="xs" color={iconColor} />
+          </StyledItem>
+          <StyledItem>
+            <FontAwesomeIcon icon={faListUl} size="xs" color={iconColor} />
+          </StyledItem>
+          <StyledItem>
+            <FontAwesomeIcon icon={faSearch} size="xs" color={iconColor} />
+          </StyledItem>
+        </Menu.Menu>
         <Menu.Menu position="right">
-          <Menu.Item header name="Story_">
-            <Icon name="book" />
-            Story_
+          <Menu.Item header name="MemGhost">
+            <BrandTitle>MEMGHOST</BrandTitle>
           </Menu.Item>
         </Menu.Menu>
       </StyledComponent>
@@ -50,6 +78,7 @@ topMenuBar.propTypes = {
     }).isRequired,
   ).isRequired,
   curIndex: PropTypes.string.isRequired,
+  curTitle: PropTypes.string.isRequired,
   updateCurrentLine: PropTypes.func.isRequired,
 }
 
@@ -60,6 +89,7 @@ topMenuBar.propTypes = {
  */
 const mapStateToProps = state => ({
   curIndex: getCurrentLine(state).index || null,
+  curTitle: getCurrentLine(state).title || 'No Title',
   lines: state.lines.lines,
 })
 

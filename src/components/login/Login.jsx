@@ -106,17 +106,19 @@ export default () => (
       <LoginCard color="purple">
         <LoginInform>
           <div>Log in to continue to:</div>
-          <BoldTitle>story_</BoldTitle>
+          <BoldTitle>MemGhost</BoldTitle>
         </LoginInform>
         <InputsWrapper>
           <Input placeholder="Enter email" />
-          <Button size="large" color="violet" fluid className="continue-button">Continue</Button>
+          <Button size="large" color="violet" fluid className="continue-button">
+            Continue
+          </Button>
         </InputsWrapper>
         <BottomActions>
           <ActionsUL>
             <LI>
               <a>
-                <span>{'Can\'t log in?'}</span>
+                <span>Can't log in?</span>
               </a>
             </LI>
             <LI>

@@ -3,7 +3,7 @@
 exports[`Line renders 1`] = `
 Array [
   <h1
-    className="ui header"
+    className="Line__StyledHeader-sc-1p5ryib-0 hBuqYq"
   >
     My Line
   </h1>,

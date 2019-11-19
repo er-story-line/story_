@@ -24,3 +24,12 @@ jobs:
         npm test
       env:
         CI: true
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.0.2
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_KEY }}
+        ARGS: "-avzh"
+        SOURCE: "dist/"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.REMOTE_TARGET }}

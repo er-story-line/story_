@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const paths = require('./paths')
+const modules = require('./modules')
 
 module.exports = {
   output: {
@@ -15,11 +17,9 @@ module.exports = {
     },
   },
   resolve: {
-    modules: [
-      path.resolve(__dirname, 'node_modules'),
-      path.resolve(__dirname, './'),
-      path.resolve(__dirname, 'src'),
-    ],
+    modules: ['node_modules', paths.appNodeModules]
+      .concat(modules.additionalModulePaths || [])
+      .concat(path.resolve(__dirname)),
     extensions: ['.js', '.jsx', '.json'],
     alias: {
       '../../theme.config$': path.join(__dirname, 'src/theming/theme.config'),
@@ -72,10 +72,18 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers':
+        'X-Requested-With, content-type, Authorization',
+    },
+  },
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import EditableLine from 'src/components/line/EditableLine'
-import Login from 'src/components/login/Login'
-import NotFoundPage from 'src/components/commons/errorpages/404'
+import EditableLine from './line/EditableLine'
+import Login from './login/Login'
+import NotFoundPage from './commons/errorpages/404'
 
 const routes = [
   { path: '/', component: EditableLine, exact: true },

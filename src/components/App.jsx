@@ -1,8 +1,8 @@
 import React from 'react'
-import Importer from 'src/lib/Importer'
-import accounts from 'src/testdata/accounts'
-import lines from 'src/testdata/lines'
-import posts from 'src/testdata/posts'
+import Importer from '../lib/Importer'
+import accounts from '../testdata/accounts'
+import lines from '../testdata/lines'
+import posts from '../testdata/posts'
 import Router from './Router'
 
 // Import test data

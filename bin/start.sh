@@ -43,4 +43,4 @@ rand=$[$RANDOM % ${#arr[@]}]
 
 echo -e "\n"\""${GREEN}${arr[$rand]}${NC}\""${CYAN}" - J.R.R. Tolkien"${NC}"\n"
 
-webpack-dev-server --progress --colors --inline --watch --hot --config webpack.dev.js
+webpack-dev-server --progress --colors --inline --watch --hot --disableHostCheck --contentBase './public' --watchContentBase --https --config webpack.dev.js

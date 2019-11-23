@@ -7,8 +7,17 @@ import { getCurrentLine } from 'src/selectors/lines'
 import { Dropdown, Menu } from 'semantic-ui-react'
 import StyledComponent from './styled'
 import AddNew from './partials/newLine'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListUl, faUserCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faListUl,
+  faUserCircle,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons'
+import { UserSession, AppConfig } from 'blockstack'
+import { Person } from 'blockstack/lib/profiles/profileSchemas'
+
+const appConfig = new AppConfig()
+const userSession = new UserSession({ appConfig })
 
 const BrandTitle = Styled.span`
   padding: 0 0 5px 0;
@@ -24,12 +33,38 @@ const StyledItem = Styled(Menu.Item)`
 
 const iconColor = '#4F412F'
 
+const signin = () => {
+  userSession.redirectToSignIn()
+}
+
+const signOut = () => {
+  userSession.signUserOut(window.location.origin)
+}
+
 class topMenuBar extends React.PureComponent {
   render() {
-    const {
-      lines, curIndex, curTitle, updateCurrentLine,
-    } = this.props
+    const { lines, curIndex, curTitle, updateCurrentLine } = this.props
     const lineKeys = Object.keys(lines)
+    let person = null
+    let isSignedIn = false
+
+    if (userSession.isSignInPending()) {
+      userSession.handlePendingSignIn().then(userdata => {
+        console.log('Userdata received', userdata)
+        window.history.replaceState({}, document.title, '/')
+        //TODO this appears to need to actually reload the page
+      })
+    }
+
+    if (userSession.isUserSignedIn()) {
+      isSignedIn = true
+      console.log('User is signed in')
+      let userdata = userSession.loadUserData()
+      console.log('userdata', userdata)
+      person = new Person(userdata.profile)
+      console.log('person', person)
+    }
+
     return (
       <StyledComponent>
         {/* <Dropdown item text={curTitle}>
@@ -50,9 +85,28 @@ class topMenuBar extends React.PureComponent {
           </Dropdown.Menu>
         </Dropdown> */}
         <Menu.Menu position="left">
-          <StyledItem>
-            <FontAwesomeIcon icon={faUserCircle} size="xs" color={iconColor} />
-          </StyledItem>
+          <Dropdown
+            item
+            icon={
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                size="xs"
+                color={iconColor}
+              />
+            }
+          >
+            <Dropdown.Menu>
+              {isSignedIn ? (
+                <>
+                  <Dropdown.Item text={person.name() || 'Anonymous'} />
+                  <Dropdown.Divider />
+                  <Dropdown.Item onClick={signOut} text="Sign Out" />
+                </>
+              ) : (
+                <Dropdown.Item onClick={signin} text="Sign In" />
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
           <StyledItem>
             <FontAwesomeIcon icon={faListUl} size="xs" color={iconColor} />
           </StyledItem>
@@ -75,7 +129,7 @@ topMenuBar.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       index: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired
   ).isRequired,
   curIndex: PropTypes.string.isRequired,
   curTitle: PropTypes.string.isRequired,
@@ -99,13 +153,11 @@ const mapStateToProps = state => ({
  * @return {object}            mapped autobind action creators
  */
 const mapDispatchToProps = dispatch => ({
-  updateCurrentLine: uri => dispatch({
-    type: UPDATE_CURRENT_LINE,
-    payload: { uri },
-  }),
+  updateCurrentLine: uri =>
+    dispatch({
+      type: UPDATE_CURRENT_LINE,
+      payload: { uri },
+    }),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(topMenuBar)
+export default connect(mapStateToProps, mapDispatchToProps)(topMenuBar)

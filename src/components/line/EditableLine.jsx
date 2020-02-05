@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getCurrentLineUri } from 'src/selectors/accounts'
-import { Container, Modal } from 'semantic-ui-react'
+import Container from 'src/components/theme/Container'
+import Modal from 'src/components/theme/Modal'
 import styled from 'styled-components'
 import TopMenuBar from 'src/components/commons/topMenuBar/TopMenuBar'
-import HeaderImg from 'src/components/commons/headerImg/HeaderImg'
 import LineWrapper from 'src/components/line/LineWrapper'
 import RepoFactory from 'src/repos/RepoFactory'
 import MediaSelect from 'src/components/mediaselect/MediaSelect'
@@ -39,9 +39,7 @@ class EditableLine extends React.Component {
   }
 
   render() {
-    const {
-      resource, modalOpen, modalContent, handleModalClose,
-    } = this.props
+    const { resource, modalOpen, modalContent, handleModalClose } = this.props
     const { title } = this.lineRepo.getMetadata(resource)
 
     let overlay = null
@@ -117,7 +115,4 @@ const mapStateToProps = state => ({
   modalContent: state.modal.content,
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditableLine)
+export default connect(mapStateToProps, mapDispatchToProps)(EditableLine)

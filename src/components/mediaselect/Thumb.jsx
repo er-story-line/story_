@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Styled from 'styled-components'
-import { Progress, Dimmer, Header } from 'semantic-ui-react'
+import Progress from 'src/components/theme/Progress'
+import Dimmer from 'src/components/theme/Dimmer'
+import Header from 'src/components/theme/Header'
 
 const ThumbContainer = Styled.div`
   display: inline-flex;

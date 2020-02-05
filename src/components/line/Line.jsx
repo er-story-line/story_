@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header } from 'semantic-ui-react'
+import Header from 'src/components/theme/Header'
 import Styled from 'styled-components'
 import PostList from './PostList'
 
@@ -10,7 +10,7 @@ const StyledHeader = Styled(Header)`
   text-align: center;
 `
 
-const Line = (props) => {
+const Line = props => {
   const { title } = props
 
   return (

@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Button } from 'semantic-ui-react'
+import MenuContainer from 'src/components/theme/MenuContainer'
+import Menu from 'src/components/theme/Menu'
+import MenuItem from 'src/components/theme/MenuItem'
+import Button from 'src/components/theme/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faImage,
@@ -40,30 +43,30 @@ class MediaMenu extends React.Component {
     const { isUpload, activeItem } = this.state
 
     return (
-      <Menu pointing secondary>
-        <Menu.Item
+      <MenuContainer pointing secondary>
+        <MenuItem
           name="image"
           active={activeItem === 'image'}
           onClick={this.onItemClick}
         >
           <FontAwesomeIcon icon={faImage} title="image" />
-        </Menu.Item>
-        <Menu.Item
+        </MenuItem>
+        <MenuItem
           name="video"
           active={activeItem === 'video'}
           onClick={this.onItemClick}
         >
           <FontAwesomeIcon icon={faVideo} title="video" />
-        </Menu.Item>
-        <Menu.Item
+        </MenuItem>
+        <MenuItem
           name="audio"
           active={activeItem === 'audio'}
           onClick={this.onItemClick}
         >
           <FontAwesomeIcon title="audio" icon={faHeadphones} />
-        </Menu.Item>
-        <Menu.Menu position="right">
-          <Menu.Item align="right">
+        </MenuItem>
+        <Menu position="right">
+          <MenuItem align="right">
             <Button.Group>
               <Button positive={!isUpload} onClick={() => this.onSwitch(false)}>
                 Select
@@ -73,9 +76,9 @@ class MediaMenu extends React.Component {
                 Upload
               </Button>
             </Button.Group>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+          </MenuItem>
+        </Menu>
+      </MenuContainer>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu } from 'semantic-ui-react'
+import MenuContainer from 'src/components/theme/MenuContainer'
 
 const style = {
   borderRadius: 0,
@@ -17,9 +17,9 @@ const style = {
 }
 
 const TopMenuBar = ({ children }) => (
-  <Menu stackable fixed="top" size="massive" secondary style={style}>
+  <MenuContainer stackable fixed="top" size="massive" secondary style={style}>
     {children}
-  </Menu>
+  </MenuContainer>
 )
 
 TopMenuBar.propTypes = {

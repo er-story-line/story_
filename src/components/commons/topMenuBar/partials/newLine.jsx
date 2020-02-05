@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { UPDATE_CURRENT_LINE } from 'src/reducers/accounts'
-import {
-  MenuItem, Icon, Button, Input,
-} from 'semantic-ui-react'
 import RepoFactory from 'src/repos/RepoFactory'
 import styled, { keyframes } from 'styled-components'
+import MenuItem from 'src/components/theme/MenuItem'
+import Icon from 'src/components/theme/Icon'
+import Input from 'src/components/theme/Input'
+import Button from 'src/components/theme/Button'
 
 const MenuItemFlush = styled(MenuItem)`
   &::before {
@@ -197,13 +198,11 @@ NewLine.propTypes = {
  * @return {object}            mapped autobind action creators
  */
 const mapDispatchToProps = dispatch => ({
-  updateCurrentLine: uri => dispatch({
-    type: UPDATE_CURRENT_LINE,
-    payload: { uri },
-  }),
+  updateCurrentLine: uri =>
+    dispatch({
+      type: UPDATE_CURRENT_LINE,
+      payload: { uri },
+    }),
 })
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(NewLine)
+export default connect(null, mapDispatchToProps)(NewLine)

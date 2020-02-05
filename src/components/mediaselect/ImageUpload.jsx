@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import Styled from 'styled-components'
 import ByteSize from 'byte-size'
-import { Input, Button } from 'semantic-ui-react'
+import Input from 'src/components/theme/Input'
+import Button from 'src/components/theme/Button'
 import UploadHandler from 'src/lib/UploadHandler'
 import Thumb from './Thumb'
 
@@ -44,9 +45,11 @@ class ImageUpload extends React.Component {
   }
 
   onFileSelect(acceptedFiles) {
-    const files = acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file),
-    }))
+    const files = acceptedFiles.map(file =>
+      Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      })
+    )
 
     this.setState({ files })
   }
@@ -78,12 +81,13 @@ class ImageUpload extends React.Component {
         files.reduce((total, file) => total + file.size, 0),
         {
           units: 'metric',
-        },
+        }
       ).toString()
 
-      const name = files.length === 1
-        ? files[0].name
-        : `( ${files.reduce(total => total + 1, 0)} Images )`
+      const name =
+        files.length === 1
+          ? files[0].name
+          : `( ${files.reduce(total => total + 1, 0)} Images )`
 
       desc = `${name} - ${size}`
     }

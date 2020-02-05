@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getCurrentLineRaw } from 'src/selectors/lines'
-import { Card } from 'semantic-ui-react'
+import CardGroup from 'src/components/theme/CardGroup'
 import Post from './Post'
 
 class PostList extends React.Component {
@@ -20,13 +20,13 @@ class PostList extends React.Component {
   render() {
     const { raw } = this.props
 
-    const lis = raw.map((item) => {
+    const lis = raw.map(item => {
       const { resource } = item
 
       return <Post key={resource} resource={resource} />
     })
 
-    return <Card.Group>{lis}</Card.Group>
+    return <CardGroup>{lis}</CardGroup>
   }
 }
 
@@ -36,7 +36,7 @@ PostList.propTypes = {
       date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
         .isRequired,
       resource: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   onError: PropTypes.func,
 }

@@ -7,7 +7,7 @@
 
 import React from 'react'
 import Styled from 'styled-components'
-import { Header } from 'semantic-ui-react'
+import Header from 'src/components/theme/Header'
 
 export const H1 = props => <Header as="h1">{props.children}</Header>
 export const H2 = props => <Header as="h2">{props.children}</Header>

@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Card from 'src/styled/Card'
-import { Input, Button } from 'semantic-ui-react'
+import Card from 'src/components/theme/Card'
+import Input from 'src/components/theme/Input'
+import Button from 'src/components/theme/Button'
 
 const HeaderWrapper = styled.header`
   position: absolute;

@@ -7,11 +7,9 @@ import Parse from 'remark-parse'
 import Rehype from 'remark-rehype'
 import Highlight from 'rehype-highlight'
 import Reactify from 'rehype-react'
-import Card from 'src/styled/Card'
-import { Label } from 'semantic-ui-react'
-import {
-  H1, H2, H3, H4, BlockQuote,
-} from './MarkdownElements'
+import Card from 'src/components/theme/Card'
+import Label from 'src/components/theme/Label'
+import { H1, H2, H3, H4, BlockQuote } from './MarkdownElements'
 
 class Post extends React.Component {
   constructor(props) {
@@ -65,7 +63,7 @@ Post.propTypes = {
         .isRequired,
       type: PropTypes.string,
       content: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   onError: PropTypes.func,
 }

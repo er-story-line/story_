@@ -4,11 +4,15 @@ import { connect } from 'react-redux'
 import Styled from 'styled-components'
 import { UPDATE_CURRENT_LINE } from 'src/reducers/accounts'
 import { getCurrentLine } from 'src/selectors/lines'
-import { Dropdown, Menu } from 'semantic-ui-react'
+import Menu from 'src/components/theme/Menu'
+import MenuItem from 'src/components/theme/MenuItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faListUl,
+  faUserCircle,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons'
 import StyledComponent from './styled'
-import AddNew from './partials/newLine'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListUl, faUserCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 const BrandTitle = Styled.span`
   padding: 0 0 5px 0;
@@ -19,16 +23,14 @@ const BrandTitle = Styled.span`
   color: #4F412F;
 `
 
-const StyledItem = Styled(Menu.Item)`
+const StyledItem = Styled(MenuItem)`
 `
 
 const iconColor = '#4F412F'
 
 class topMenuBar extends React.PureComponent {
   render() {
-    const {
-      lines, curIndex, curTitle, updateCurrentLine,
-    } = this.props
+    const { lines } = this.props
     const lineKeys = Object.keys(lines)
     return (
       <StyledComponent>
@@ -49,7 +51,7 @@ class topMenuBar extends React.PureComponent {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> */}
-        <Menu.Menu position="left">
+        <Menu position="left">
           <StyledItem>
             <FontAwesomeIcon icon={faUserCircle} size="xs" color={iconColor} />
           </StyledItem>
@@ -59,12 +61,12 @@ class topMenuBar extends React.PureComponent {
           <StyledItem>
             <FontAwesomeIcon icon={faSearch} size="xs" color={iconColor} />
           </StyledItem>
-        </Menu.Menu>
-        <Menu.Menu position="right">
-          <Menu.Item header name="MemGhost">
+        </Menu>
+        <Menu position="right">
+          <MenuItem header name="MemGhost">
             <BrandTitle>MEMGHOST</BrandTitle>
-          </Menu.Item>
-        </Menu.Menu>
+          </MenuItem>
+        </Menu>
       </StyledComponent>
     )
   }
@@ -75,7 +77,7 @@ topMenuBar.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       index: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired
   ).isRequired,
   curIndex: PropTypes.string.isRequired,
   curTitle: PropTypes.string.isRequired,
@@ -99,13 +101,11 @@ const mapStateToProps = state => ({
  * @return {object}            mapped autobind action creators
  */
 const mapDispatchToProps = dispatch => ({
-  updateCurrentLine: uri => dispatch({
-    type: UPDATE_CURRENT_LINE,
-    payload: { uri },
-  }),
+  updateCurrentLine: uri =>
+    dispatch({
+      type: UPDATE_CURRENT_LINE,
+      payload: { uri },
+    }),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(topMenuBar)
+export default connect(mapStateToProps, mapDispatchToProps)(topMenuBar)

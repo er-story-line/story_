@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Icon } from 'semantic-ui-react'
+import Button from 'src/components/theme/Button'
+import Icon from 'src/components/theme/Icon'
 
 class ActionControls extends React.Component {
   constructor(props) {

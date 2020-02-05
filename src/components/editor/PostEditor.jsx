@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import UUID from 'uuid'
-import { Card } from 'semantic-ui-react'
+import Card from 'src/components/theme/Card'
+import CardContent from 'src/components/theme/CardContent'
 import RichTextEditor from './RichTextEditor'
 import './post-editor.css'
 
@@ -58,14 +59,14 @@ class PostEditor extends React.Component {
 
     return (
       <Card fluid>
-        <Card.Content>
+        <CardContent>
           <RichTextEditor
             key={key}
             placeholder={placeholder}
             onSave={this.onSave}
             content={content}
           />
-        </Card.Content>
+        </CardContent>
       </Card>
     )
   }

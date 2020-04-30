@@ -72,7 +72,7 @@
     "draft-js-prism-plugin": "^0.1.3",
     "emittery": "^0.4.1",
     "immutability-helper": "^3.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "markdown-draft-js": "^1.7.1",
     "moment": "^2.24.0",
     "prismjs": "^1.17.1",

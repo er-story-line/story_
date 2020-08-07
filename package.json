@@ -75,7 +75,7 @@
     "jquery": "^3.4.1",
     "markdown-draft-js": "^1.7.1",
     "moment": "^2.24.0",
-    "prismjs": "^1.17.1",
+    "prismjs": "^1.21.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

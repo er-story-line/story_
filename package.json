@@ -74,7 +74,7 @@
     "immutability-helper": "^3.0.1",
     "jquery": "^3.4.1",
     "markdown-draft-js": "^1.7.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "prismjs": "^1.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
